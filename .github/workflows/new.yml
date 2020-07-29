@@ -1,4 +1,4 @@
-name: CI
+name: new
 on: [push]
 
 jobs:
@@ -23,9 +23,5 @@ jobs:
         steps:
             - uses: actions/checkout@v1
             - run: node -v
-            
-            - name: Database Connection
-            - run: node app.js
-            
               env:
                 MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
