@@ -4,14 +4,13 @@ on: [push]
 jobs:
 
     init_flow:
-        name: 'Run MySQL and Postgres on ${{ matrix.os }}'
+        name: 'Run MySQL on ${{ matrix.os }}'
         runs-on: ${{ matrix.os }}
         strategy:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
 
-        # via https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
         services:
             mysql:
                 image: mysql:5.7
@@ -24,5 +23,9 @@ jobs:
         steps:
             - uses: actions/checkout@v1
             - run: node -v
+            
+            - name: Database Connection
+            - run: node app.js
+            
               env:
                 MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
