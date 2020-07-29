@@ -13,8 +13,8 @@ const connection = mysql.createConnection({
   host:'127.0.0.1',
   user:'dev',
   port: 8888,
-  password:'password',
-  database:'company'
+  password:'password'
 });
 connection.connect()
 console.log('database connected')
+connection.end()
