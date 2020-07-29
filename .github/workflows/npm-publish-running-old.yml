@@ -25,4 +25,4 @@ jobs:
       - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword
       - run: mysql --version
       - run: node --version
-      - run: node app.js
+      - run: node app.js 
