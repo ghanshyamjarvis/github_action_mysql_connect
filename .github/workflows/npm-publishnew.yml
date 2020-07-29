@@ -10,9 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    # ... some other config ...
-
+   
     steps:
     - uses: actions/checkout@v1
     - name: Shutdown Ubuntu MySQL (SUDO)
@@ -27,7 +25,6 @@ jobs:
     - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        host port: 3800 
     	container port: 3307 
 	    mysql database: 'company'
 	    mysql root password: ${{ secrets.RootPassword }}
@@ -38,7 +35,7 @@ jobs:
       run: npm install
 
     - name: check login to mysql
-      run: mysql -h 127.0.0.1 -u root -ppassword, exit
+      run:  mysql --host 127.0.0.1 --port 3307 -u root -ppassword
 
     - name: Database Connection
       run: node app.js
