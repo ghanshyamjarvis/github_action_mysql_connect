@@ -8,41 +8,34 @@ on:
       - staging 
 
 jobs:
-  build:
-    
+  test-host:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql stop
-      
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-      
-        with:
-          node-version: ${{ matrix.node-version }}
-      
-      - name: Set up MySQL 5.7
-        uses: mirromutth/mysql-action@master
-      
-        with:
-          mysql version: 5.7
-          mysql database: 'company'
-          mysql root password: ${{ secrets.DatabaseRootPassword }}
-          mysql user: 'test'
-          mysql password: ${{ secrets.DatabasePassword }}
-           
-      - name: npm initialize       
-        run: npm install
-        
-      - name: run build
-        run: npm run build --if-present
-        
-      - name: check sql
-        run: mysql -h 127.0.0.1 -P 3306 -utest -ppassword
-        
-      - name: Database Connected
-        run: node app.js
-        env: 
-         CI: true
+    steps:
+      - name: Verify MySQL connection from host
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e "SHOW DATABASES"
+
+  test-container:
+    runs-on: ubuntu-latest
+    container: ubuntu
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    steps:
+      - name: Verify MySQL connection from container
+        run: |
+          apt-get update && apt-get install -y mysql-client
+          mysql --host mysql -uroot -ppassword -e "SHOW DATABASES"
