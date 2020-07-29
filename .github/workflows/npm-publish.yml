@@ -21,10 +21,12 @@ jobs:
       uses: mirromutth/mysql-action@master
       with:
         mysql version: 5.7
-        mysql database: test
+        mysql database: company
         mysql root password: ${{ secrets.DatabasePassword }}
-    - name: npm install, build, and test
-      run: |
-        npm install
+    - name: npm install, build, and company
+      run: npm install
+    - name: Database Connection
+      run: node app.js
+     
       env:
         CI: true
