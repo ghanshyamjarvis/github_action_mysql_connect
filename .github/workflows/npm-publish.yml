@@ -1,5 +1,14 @@
 name: CI
-on: push
+
+on:
+  push:
+    branches: 
+      - master
+      - staging
+  pull_request:
+    branches: 
+      - master
+      - staging
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,4 +23,13 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS test;'
+      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS company;'
+      
+      - name: npm initialize       
+      - run: npm install
+      
+      - name: Database Connected
+        run: node app.js
+      
+        env: 
+         CI: true      
