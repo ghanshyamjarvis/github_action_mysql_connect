@@ -25,8 +25,8 @@ jobs:
         mysql root password: ${{ secrets.DatabasePassword }}
     - name: npm install, build, and company
       run: npm install
+    - name: check login to mysql
+      run: mysql -h 127.0.0.1 --port 3306 -u root -ppassword
     - name: Database Connection
       run: node app.js
-     
-      env:
-        CI: true
+    
