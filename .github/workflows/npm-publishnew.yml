@@ -6,9 +6,13 @@ on:
   pull_request:
     branches:
     - master
+
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+
+    # ... some other config ...
+
     steps:
     - uses: actions/checkout@v1
     - name: Shutdown Ubuntu MySQL (SUDO)
@@ -19,19 +23,22 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Set up MySQL 5.7
-      uses: mirromutth/mysql-action@master
+    
+    - name: Set up MySQL
+      uses: mirromutth/mysql-action@v1.1
       with:
-        container port: 3307
-        mysql database: 'company'
-        mysql root password: ${{ secrets.DatabasePassword }}
-        
+        host port: 3800 
+    	container port: 3307 
+	    mysql database: 'company'
+	    mysql root password: ${{ secrets.RootPassword }}
+	    mysql user: 'root' 
+	    mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
+
     - name: npm install, build, and company
       run: npm install
 
     - name: check login to mysql
-      run: mysql -h 127.0.0.1 -u root -ppassword
+      run: mysql -h 127.0.0.1 -u root -ppassword, exit
 
     - name: Database Connection
       run: node app.js
-    
