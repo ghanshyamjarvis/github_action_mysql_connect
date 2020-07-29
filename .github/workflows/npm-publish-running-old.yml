@@ -10,12 +10,22 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: company
+          MYSQL_USER: dev
+          MYSQL_PASSWORD: password
         ports:
             - '8888:3306'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         
     steps:
+      - name: Set Node version to 12
+        uses: actions/setup-node@v1
+        with:
+          version: 12
       
       - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS test;'
+      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e "ALTER USER 'dev'@'%' IDENTIFIED WITH mysql_native_password BY 'password';"
+      - run: mysql --version
+      - run: node --version
+      - run: npm install
+      - run: node app.js 
