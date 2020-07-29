@@ -7,39 +7,32 @@ on:
  
 jobs:
   build:
+    
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-
       - name: Shutdown Ubuntu MySQL (SUDO)
         run: sudo service mysql stop
-      
+        
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
-      
         with:
           node-version: ${{ matrix.node-version }}
-      
+          
       - name: Set up MySQL 5.7
         uses: mirromutth/mysql-action@master
-      
         with:
           mysql version: 5.7
-          mysql database: 'company'
-          mysql root password: ${{ secrets.DatabaseRootPassword }}
-          mysql user: 'test'
-          mysql password: ${{ secrets.DatabasePassword }}
-           
-      - name: npm initialize       
-        run: npm install
+          mysql database: company
+          mysql root password: ${{ secrets.DatabasePassword }}
         
+      - name: initialize       
+        run: npm install
+      
       - name: run build
         run: npm run build --if-present
-        
-      - name: check sql
-        run: mysql -h 127.0.0.1 --port 3306 -u root -ppassword
-        
-      - name: Database Connected
+     
+      - name: run app
         run: node app.js
         env: 
          CI: true
