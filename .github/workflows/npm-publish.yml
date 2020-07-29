@@ -3,24 +3,24 @@ name: Node.js Example
 on: [push]
 
 jobs:
-  test-host:
+  build:
     runs-on: ubuntu-latest
     services:
-      mysql: 
-    image: mariadb:10.3 
-    env:    
-        MYSQL_ROOT_PASSWORD: password   
-    ports:  
-    - 3306:3306 
-    options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-     steps: 
-     - name: Verify MySQL connection from container
-       run:
-            apt-get update
-            apt-get install -y mysql-client
-            mysql --host mydb -uroot -ppassword -e "SHOW DATABASES"
-            npm install
-            npm run build --if-present
-            node app.js
-       env: 
-            CI: true
+        mysql: 
+          image: mariadb:10.3 
+          env:    
+           MYSQL_ROOT_PASSWORD: password   
+          ports:  
+           - 3306:3306 
+          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps: 
+    - name: Verify MySQL connection from container
+      run:
+        apt-get update
+        apt-get install -y mysql-client
+        mysql --host mydb -uroot -ppassword -e "SHOW DATABASES"
+        npm install
+        npm run build --if-present
+        node app.js
+      env: 
+          CI: true
