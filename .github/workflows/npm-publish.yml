@@ -1,15 +1,11 @@
 name: Node.js Example
 
-on: 
-  push:
-    branches:
-     -master
-     -staging
-
+on:
   pull_request:
-    branches:
-     -master
-     -staging
+  push:
+    branches: 
+      - master
+      - staging 
 
 jobs:
   build:
