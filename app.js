@@ -18,3 +18,4 @@ const connection = mysql.createConnection({
 connection.connect()
 console.log('database connected')
 connection.end()
+server.close();
