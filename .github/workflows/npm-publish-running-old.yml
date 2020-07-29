@@ -11,6 +11,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: company
+          MYSQL_USER: dev
+          MYSQL_PASSWORD: password
         ports:
             - '8888:3306'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -22,7 +24,7 @@ jobs:
           version: 12
       
       - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword
+      - run: mysql -h 127.0.0.1 --port 8888 -u dev -ppassword
       - run: mysql --version
       - run: node --version
       - run: npm install
