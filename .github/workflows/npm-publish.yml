@@ -11,11 +11,9 @@ jobs:
         run: sudo service mysql stop
         
       - name: Use Node.js ${{ matrix.node-version }}
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-          
+             
       - name: Set up MySQL 5.7
+      
       - uses: mirromutth/mysql-action@master
         with:
           mysql version: 5.7
