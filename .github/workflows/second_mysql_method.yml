@@ -33,6 +33,6 @@ jobs:
     - name: npm install
       run: npm install
     - name: mysql login  
-      run: mysql -h 127.0.0.1 -u root -ppassword
+      run: mysql -u root -ppassword
       env:
         CI: true
