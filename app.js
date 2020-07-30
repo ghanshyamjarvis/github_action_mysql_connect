@@ -9,7 +9,7 @@ const server = app.listen(port, function() {
 });
 
 const connection = mysql.createConnection({
-  host:'localhost',
+  host:'127.0.0.1',
   user:'root',
   password:'password',
   port: 3307
