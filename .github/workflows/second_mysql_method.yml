@@ -32,9 +32,7 @@ jobs:
         mysql root password: ${{ secrets.DatabasePassword }}
     - name: npm install
       run: npm install
-    - name: password  
-      run: npm company -- --password=${{ secrets.DatabasePassword }}
-    - name: app    
-      run: node app.js
-    env:
+    - name: mysql login  
+      run: mysql -h 127.0.0.1 -u root -ppassword
+      env:
         CI: true
