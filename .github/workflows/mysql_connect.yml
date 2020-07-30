@@ -22,18 +22,23 @@ jobs:
         uses: actions/setup-node@v1
         with:
           version: 12
-
+        
+      - uses: actions/setup-node@v1
       - name: Require password to set for identification
         run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';"
       
+      - uses: actions/setup-node@v1
       - name: mysql version
         run: mysql --version
       
+      - uses: actions/setup-node@v1
       - name: Node version
         run: node --version
       
+      - uses: actions/setup-npm
       - name: Install NPM  
         run: npm install
       
+      - uses: actions/setup-databaseConnection
       - name: Database Connection
       - run: node app.js 
