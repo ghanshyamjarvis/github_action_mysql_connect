@@ -31,14 +31,11 @@ jobs:
       - name: mysql version
         run: mysql --version
       
-      - uses: actions/setup-node@v1
       - name: Node version
         run: node --version
       
-      - uses: actions/setup-npm
       - name: Install NPM  
         run: npm install
       
-      - uses: actions/setup-databaseConnection
       - name: Database Connection
-      - run: node app.js 
+        run: node app.js 
