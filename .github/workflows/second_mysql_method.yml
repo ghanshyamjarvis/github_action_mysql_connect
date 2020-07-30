@@ -36,6 +36,7 @@ jobs:
         npm install
         mysql --version
         node --version
-        mysql -u root -ppassword -h 127.0.0.1 -P 3306
+        "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';"
+        
       env:
         CI: true
