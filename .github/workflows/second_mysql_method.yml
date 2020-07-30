@@ -27,20 +27,19 @@ jobs:
         with:
           mysql database: 'company'
           mysql root password: ${{ secrets.DatabaseRootPassword }}
-          mysql user: 'test'
+          mysql user: 'root'
           mysql password: ${{ secrets.DatabasePassword }}
            
       - name: npm initialize       
         run: npm install
       
       - name: root login
-      - run: mysql -h 127.0.0.1 -u root -ppassword
+        run: mysql -h 127.0.0.1 -u root -ppassword
       
       - name: Database Connection  
-      - run: node app.js
-
+        run: node app.js
+            
       - name: run build
         run: npm run build --if-present  
-        
         env: 
          CI: true
