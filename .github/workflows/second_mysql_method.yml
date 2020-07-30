@@ -35,6 +35,6 @@ jobs:
         npm install
         mysql --version
         node --version
-        mysql -h 127.0.0.1  -u root -ppassword
+        mysql -h 127.0.0.1 -P 8888 -u root -p
       env:
         CI: true
