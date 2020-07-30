@@ -30,10 +30,11 @@ jobs:
         mysql version: 5.7
         mysql database: company
         mysql root password: ${{ secrets.DatabasePassword }}
-    - name: npm install, build, and test
-      run: |
-        npm install
-        node app.js
-        npm company -- --password=${{ secrets.DatabasePassword }}
-      env:
+    - name: npm install
+      run: npm install
+    - name: password  
+      run: npm company -- --password=${{ secrets.DatabasePassword }}
+    - name: app    
+      run: node app.js
+    env:
         CI: true
