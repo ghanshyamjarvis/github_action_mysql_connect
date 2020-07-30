@@ -28,14 +28,7 @@ jobs:
         run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';"
       
       - uses: actions/setup-node@v1
-      - name: mysql version
-        run: mysql --version
-      
-      - name: Node version
-        run: node --version
-      
-      - name: Install NPM  
-        run: npm install
-      
-      - name: Database Connection
-        run: node app.js 
+      - run: mysql --version
+      - run: node --version
+      - run: npm install
+      - run: node app.js 
