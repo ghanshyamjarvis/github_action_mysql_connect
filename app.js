@@ -17,7 +17,6 @@ const connection = mysql.createConnection({
 });
 connection.connect()
 console.log('database connected')
-
-//connection.end()
-//console.log('database connected11')
-//server.close();
+connection.end()
+console.log('database connected11')
+server.close();
