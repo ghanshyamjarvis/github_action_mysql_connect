@@ -33,5 +33,7 @@ jobs:
     - name: npm install, build
       run: |
         npm install
+        mysql --version
+        node --version
       env:
         CI: true
