@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
   host:'localhost',
   user:'root',
   password:'password',
-  port: 8888
+  port: 3307
 });
  connection.connect()
  console.log('database connected')
