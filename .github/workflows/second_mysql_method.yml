@@ -25,7 +25,7 @@ jobs:
         uses: mirromutth/mysql-action@master
       
         with:
-          container port: 3307
+          host port: 8888 
           mysql database: 'company'
           mysql root password: ${{ secrets.DatabaseRootPassword }}
           mysql user: 'test'
@@ -33,13 +33,10 @@ jobs:
            
       - name: npm initialize       
         run: npm install
-      
-      - name: root login
-        run: mysql -h 127.0.0.1 --port 3307 -u root -ppassword -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';"
-      
       - name: Database Connection  
         run: node app.js
-
+      - name: root login
+        run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e "ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';"
       - name: run build
         run: npm run build --if-present  
         env: 
